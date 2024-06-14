@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import SignUpForm from "../components/signUpForm";
 import SignInForm from "../components/signInForm";
-import { AuthOptionsProvider, useAuthOptions } from "../context/AuthOptionContext";
+import { useAuthOptions } from "../context/AuthOptionContext";
 import { useSharedSignInState } from "../context/signInContext";
 import { useSharedSignUpState } from "../context/signUpContext";
+import { useForgotFormContext } from "../context/forgotContext";
 
 const AuthOptions = () => {
   //Sign in, Sign up button State
   const { authOptions, setAuthOptions } = useAuthOptions();
   const { signInContext, setSignInContext } = useSharedSignInState();
   const { sharedSignUpState, setSharedSignUpState } = useSharedSignUpState();
+  const { isForgot, setIsForgot } = useForgotFormContext();
+  
   const SignUpClick = () => {
     setAuthOptions(!authOptions);
     setSharedSignUpState(!sharedSignUpState);
@@ -18,7 +21,10 @@ const AuthOptions = () => {
     setAuthOptions(!authOptions);
     setSignInContext(!signInContext);
   };
-
+  const ForgotClick = () => {
+    setAuthOptions(!authOptions);
+    setIsForgot(!isForgot);
+  };
   return (
     <div className="w-screen h-screen flex justify-center items-center ">
       {authOptions && (
@@ -36,6 +42,9 @@ const AuthOptions = () => {
           >
             Sign Up
           </button>
+          <a onClick={ForgotClick} className="hover:underline">
+            Forgot Password?
+          </a>
         </div>
       )}
       {signInContext && <SignInForm></SignInForm>}
@@ -43,5 +52,6 @@ const AuthOptions = () => {
     </div>
   );
 };
+
 
 export default AuthOptions;
