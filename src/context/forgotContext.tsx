@@ -19,7 +19,7 @@ export const ForgotFormContextProvider = ({
 }) => {
     const [isForgot, setIsForgot] = useState<boolean>(false); 
     return(
-        <ForgotFormContext.Provider value={{isForgot, setIsForgot}}></ForgotFormContext.Provider>
+        <ForgotFormContext.Provider value={{isForgot, setIsForgot}}>{children}</ForgotFormContext.Provider>
     )
 };
 

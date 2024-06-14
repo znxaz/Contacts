@@ -5,6 +5,7 @@ import { useAuthOptions } from "../context/AuthOptionContext";
 import { useSharedSignInState } from "../context/signInContext";
 import { useSharedSignUpState } from "../context/signUpContext";
 import { useForgotFormContext } from "../context/forgotContext";
+import ForgotForm from "./forgotForm";
 
 const AuthOptions = () => {
   //Sign in, Sign up button State
@@ -20,10 +21,6 @@ const AuthOptions = () => {
   const SignInClick = () => {
     setAuthOptions(!authOptions);
     setSignInContext(!signInContext);
-  };
-  const ForgotClick = () => {
-    setAuthOptions(!authOptions);
-    setIsForgot(!isForgot);
   };
   return (
     <div className="w-screen h-screen flex justify-center items-center ">
@@ -42,13 +39,11 @@ const AuthOptions = () => {
           >
             Sign Up
           </button>
-          <a onClick={ForgotClick} className="hover:underline">
-            Forgot Password?
-          </a>
         </div>
       )}
       {signInContext && <SignInForm></SignInForm>}
       {sharedSignUpState && <SignUpForm></SignUpForm>}
+      {isForgot && <ForgotForm></ForgotForm>}
     </div>
   );
 };
