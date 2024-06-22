@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useSharedDropDownState } from "../context/dropdownContext";
 import contacts from "../assets/images/contacts.png";
 import defaultPfp from "../assets/images/defPfp.png";
+import { signOut } from "../api/auth/AuthService";
 
 const NavBar = () => {
   const {sharedState, setSharedState} = useSharedDropDownState(); 
-  const list = ["My profile", "Settings", "Logout"];
   const showDropDown = () => {
     setSharedState(!sharedState);
   };
@@ -21,8 +21,8 @@ const NavBar = () => {
           />
         </div>
         <div className="space-x-7 m-4 flex flex-row justify-between items-center text-3xl font-extrabold">
-          <a className="hover:underline cursor-pointer">Home</a>
-          <a className="hover:underline cursor-pointer">Contacts</a>
+          <a className="hover:underline cursor-pointer"  onClick={()=> window.location.href = "/"}>Home</a>
+          <a className="hover:underline cursor-pointer" onClick={()=> window.location.href = "/contacts"}>Contacts</a>
         </div>
         <div className="flex justify-between items-center flex-col">
         <img
@@ -37,14 +37,17 @@ const NavBar = () => {
       {sharedState && (
         <div className="flex justify-end right-0 max-w-1/6 h-1/4 w-36 absolute mx-2 mt-2">
           <ul className="flex justify-center items-center bg-slate-100 flex-col w-full h-full rounded-xl">
-            {list.map((item) => (
-              <li key={item} className="bg-transparent border border-transparent font-extrabold text-gray-900 text-sm block w-full p-2.5 hover:bg-white">
-                <a href="">{item} </a></li>
-            ))}
+
+              <li key="MyProfile" className="bg-transparent border border-transparent font-extrabold text-gray-900 text-sm block w-full p-2.5 hover:bg-white">
+                <a href="">My Profile</a></li>
+                <li key="Settings" className="bg-transparent border border-transparent font-extrabold text-gray-900 text-sm block w-full p-2.5 hover:bg-white">
+                <a href="">Settings</a></li>
+                <li key="SignOut" className="bg-transparent border border-transparent font-extrabold text-gray-900 text-sm block w-full p-2.5 hover:bg-white">
+                <a href="" onClick={signOut}>Sign Out</a></li>
           </ul>
         </div>
       )}
-    </div>
+      </div>
     
   );
 };

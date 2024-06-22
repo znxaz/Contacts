@@ -3,8 +3,9 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { signUp } from "../api/auth/AuthService";
 import { useAuthOptions } from "../context/AuthOptionContext";
 import { useSharedSignUpState } from "../context/signUpContext";
-import { getFirestore, collection, doc, setDoc, addDoc } from "firebase/firestore"; 
+import {doc, setDoc } from "firebase/firestore"; 
 import { db } from "../api/auth/firebaseConfig";
+import { v4 as uuidv4 } from "uuid";
 const SignUpForm = () => {
   const fields = [
     { label: "First Name", name: "firstName" },
@@ -26,10 +27,13 @@ const SignUpForm = () => {
 
   const onSubmit: SubmitHandler<SignUpFormData> = (data) => {
     signUp(data.email, data.password);
+    addUser(data)
   };
 
-  async function addUser(userId: string, userData: SignUpFormData) {
+  async function addUser(userData: SignUpFormData) {
     try {
+      const userId = uuidv4(); 
+      console.log(userId); 
       await setDoc(doc(db, "users", userId), userData);
       console.log("User added with ID: ", userId);
     } catch (e) {

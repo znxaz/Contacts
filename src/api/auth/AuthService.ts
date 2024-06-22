@@ -10,7 +10,10 @@ export const signUp = (email: string, password: string) => {
   return createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      return user;
+      if(user){
+        window.location.href = '/'
+      }
+      return user; 
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -24,7 +27,9 @@ export const signIn = (email: string, password: string) => {
   return signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      console.log("User signed in:", user);
+      if(user){
+        window.location.href = '/'
+      }
       return user;
     })
     .catch((error) => {
@@ -36,6 +41,8 @@ export const signIn = (email: string, password: string) => {
   };
 
   export const signOut = () => {
+    console.log("byebye"); 
+    window.location.href = "/auth"; 
     return auth.signOut(); 
   }
 
