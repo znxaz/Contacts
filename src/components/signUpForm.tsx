@@ -3,6 +3,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { signUp } from "../api/auth/AuthService";
 import { useAuthOptions } from "../context/AuthOptionContext";
 import { useSharedSignUpState } from "../context/signUpContext";
+import { getFirestore, collection, doc, setDoc, addDoc } from "firebase/firestore"; 
+import { db } from "../api/auth/firebaseConfig";
 const SignUpForm = () => {
   const fields = [
     { label: "First Name", name: "firstName" },
@@ -25,6 +27,15 @@ const SignUpForm = () => {
   const onSubmit: SubmitHandler<SignUpFormData> = (data) => {
     signUp(data.email, data.password);
   };
+
+  async function addUser(userId: string, userData: SignUpFormData) {
+    try {
+      await setDoc(doc(db, "users", userId), userData);
+      console.log("User added with ID: ", userId);
+    } catch (e) {
+      console.error("Error adding user: ", e);
+    }
+  }
 
   const { authOptions, setAuthOptions } = useAuthOptions();
   const { sharedSignUpState, setSharedSignUpState } = useSharedSignUpState();

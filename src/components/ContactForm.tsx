@@ -1,7 +1,8 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useSharedDropDownState } from "../context/dropdownContext";
-
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../api/auth/firebaseConfig";
 interface ContactValues {
   firstName: string;
   lastName: string;
@@ -24,8 +25,16 @@ const ContactForm = () => {
     { name: "email", label: "Email" },
   ];
 
-  const onSubmit: SubmitHandler<ContactValues> = (data) => {
+  const onSubmit: SubmitHandler<ContactValues> = async (data) => {
     alert(JSON.stringify(data));
+    try {
+      const docRef = await addDoc(collection(db, "Contacts"), {
+        data: data,
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);  
+    }
   };
 
   return (
