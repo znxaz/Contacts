@@ -4,6 +4,7 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   updatePassword,
+  signOut
 } from "firebase/auth";
 
 export const signUp = (email: string, password: string) => {
@@ -40,10 +41,10 @@ export const signIn = (email: string, password: string) => {
     });
   };
 
-  export const signOut = () => {
+  export const SignOut = () => {
     console.log("byebye"); 
     window.location.href = "/auth"; 
-    return auth.signOut(); 
+    return signOut(auth); 
   }
 
   export const resetPasswordEmail = (email: string) => {
