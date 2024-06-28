@@ -1,6 +1,7 @@
 import ContactCard from "../components/contact";
 import NavBar from "../components/navBar";
-import {SharedDropDownProvider } from "../context/dropdownContext";
+import {SharedDropDownProvider, useSharedDropDownState } from "../context/dropdownContext";
+
 const Contacts = () => {
   return (
 <>

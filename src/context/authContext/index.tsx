@@ -19,7 +19,11 @@ interface AuthContextType {
 const AuthContext = React.createContext<AuthContextType | undefined>(undefined);
 
 const useAuth = () => {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  if(!context){
+    throw new Error("useAuth must be used within an Authprovider")
+  }
+  return context; 
 };
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -28,6 +32,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, initializeUser);
+    return unsubscribe; 
   }, []);
 
   const initializeUser = (user: User | null) => {
@@ -54,4 +59,4 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export { AuthProvider, AuthContext };
+export { AuthProvider, AuthContext, useAuth };

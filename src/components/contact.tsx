@@ -4,11 +4,16 @@ import phoneIcon from "../assets/images/phoneIcon.png";
 import settings from "../assets/images/settings.png";
 import smartPhone from "../assets/images/smartphone.png";
 import { Tooltip } from "react-tooltip";
+import { useSharedDropDownState } from "../context/dropdownContext";
 const ContactCard = () => {
+  const { sharedState, setSharedState } = useSharedDropDownState();
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
+    <div
+      className="w-screen h-screen flex items-center justify-center bg-slate-100"
+      onClick={() => sharedState ?  setSharedState(!sharedState): sharedState}
+    >
       <div className=" w-4/5 h-1/2 items-center justify-center">
-        <div className="flex justify-between items-center w-full h-[5rem]">
+        <div className="flex justify-between items-center w-full h-[5rem] border border-white bg-white rounded-md hover:bg-slate-200">
           <div className="flex w-2/3">
             <img
               src={defaultPfp}
@@ -25,7 +30,7 @@ const ContactCard = () => {
             <img
               src={settings}
               alt="settings"
-              className="w-6 h-6 mr-4 rounded-lg hover:bg-gray-200 hover:cursor-pointer"
+              className="w-6 h-6 mr-4 rounded-lg hover:cursor-pointer"
               data-tooltip-id="settingsTip"
               data-tooltip-content="Contact info"
               data-tooltip-place="top"
@@ -35,7 +40,7 @@ const ContactCard = () => {
             <img
               src={phoneIcon}
               alt="call"
-              className="w-6 h-6 mr-4 rounded-lg hover:bg-gray-200 hover:cursor-pointer"
+              className="w-6 h-6 mr-4 rounded-lg hover:cursor-pointer"
               data-tooltip-id="Call"
               data-tooltip-content="Call"
               data-tooltip-place="top"
@@ -44,7 +49,7 @@ const ContactCard = () => {
             <img
               src={smartPhone}
               alt="message"
-              className="w-6 h-6 mr-4 rounded-lg hover:bg-gray-200 hover:cursor-pointer"
+              className="w-6 h-6 mr-4 rounded-lg hover:cursor-pointer"
               data-tooltip-id="Email"
               data-tooltip-content="Email"
               data-tooltip-place="top"

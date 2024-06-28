@@ -25,7 +25,8 @@ const SignUpForm = () => {
   const { register, handleSubmit } = useForm<SignUpFormData>();
 
   const onSubmit: SubmitHandler<SignUpFormData> = (data) => {
-    signUp(data.email, data.password);
+    const displayName = `${data.firstName} ${data.lastName}`
+    signUp(data.email, data.password, displayName );
     addUser(data);
   };
 
