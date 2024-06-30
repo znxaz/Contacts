@@ -1,16 +1,22 @@
 import ContactCard from "../components/contact";
 import NavBar from "../components/navBar";
-import {SharedDropDownProvider, useSharedDropDownState } from "../context/dropdownContext";
+import { AuthProvider } from "../context/authContext";
+import {
+  SharedDropDownProvider,
+  useSharedDropDownState,
+} from "../context/dropdownContext";
 
 const Contacts = () => {
   return (
-<>
-<SharedDropDownProvider>
-  <NavBar></NavBar>
-  <ContactCard></ContactCard>
-</SharedDropDownProvider>
-</>
+    <>
+      <AuthProvider>
+        <SharedDropDownProvider>
+          <NavBar></NavBar>
+          <ContactCard></ContactCard>
+        </SharedDropDownProvider>
+      </AuthProvider>
+    </>
   );
 };
 
-export default Contacts
+export default Contacts;

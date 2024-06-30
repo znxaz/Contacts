@@ -48,7 +48,7 @@ const SignInForm = () => {
         <form
           action=""
           onSubmit={handleSubmit(onSubmit)}
-          className=" flex justify-center items-center bg-white shadow-custom  h-1/2 w-[30em] flex-col rounded-xl"
+          className="flex justify-center items-center bg-white shadow-custom  h-1/2 w-[30em] flex-col rounded-xl"
         >
           <div
             className="justify-self-start self-start ml-[2.5em] pb-[1em] -mb-5 hover:cursor-pointer"

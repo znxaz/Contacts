@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useSharedDropDownState } from "../context/dropdownContext";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../api/auth/firebaseConfig";
+import { notify } from "./toast";
 interface ContactValues {
   firstName: string;
   lastName: string;
@@ -13,28 +14,30 @@ interface ContactValues {
 interface Field {
   name: string;
   label: string;
+  type: string;
 }
 
 const ContactForm = () => {
   const { sharedState, setSharedState } = useSharedDropDownState();
   const { register, handleSubmit } = useForm<ContactValues>();
   const Fields: Field[] = [
-    { name: "firstName", label: "First Name" },
-    { name: "lastName", label: "Last Name" },
-    { name: "phoneNumber", label: "Phone Number" },
-    { name: "email", label: "Email" },
+    { name: "firstName", label: "First Name", type: "text" },
+    { name: "lastName", label: "Last Name", type: "text" },
+    { name: "phoneNumber", label: "Phone Number", type: "tel" },
+    { name: "email", label: "Email", type: "email" },
   ];
 
   const onSubmit: SubmitHandler<ContactValues> = async (data) => {
-    alert(JSON.stringify(data));
     try {
       const docRef = await addDoc(collection(db, "Contacts"), {
         data: data,
       });
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
-      console.error("Error adding document: ", e);  
+      console.error("Error adding document: ", e);
     }
+    notify("Contact has been added!"); 
+
   };
 
   return (
@@ -45,35 +48,38 @@ const ContactForm = () => {
       <form
         action=""
         onSubmit={handleSubmit(onSubmit)}
-        className="flex justify-center items-center flex-col border-2 rounded-3xl w-80 h-3/5"
+        className="flex justify-center items-center bg-white shadow-custom rounded-xl w-1/3 h-2/3"
       >
-        <div className="flex justify-center items-center bg-white flex-col w-full h-full rounded-3xl">
+        <div className="flex justify-center items-center bg-white shadow-custom flex-col w-full h-full rounded-xl">
           {Fields.map((field) => (
-            <div className="relative mb-3">
+            <>
               <label
                 htmlFor={field.name}
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="justify-self-start self-start ml-[5em] m-2"
               >
                 {field.label}
               </label>
               <input
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                type="text"
+                className="w-2/3 bg-white border focus-visible:ring-blue-500 focus-visible:outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                type={field.type}
                 id={field.name}
+                key={field.name}
                 {...register(
                   field.name as
                     | "firstName"
                     | "lastName"
                     | "phoneNumber"
-                    | "email"
+                    | "email",
+                  { required: true }
                 )}
-              />
-            </div>
+              ></input>
+            </>
           ))}
+
           <input
             type="submit"
             value="Add Contact"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="w-1/2 mt-6 bg-white border hover:cursor-pointer focus-visible:ring-blue-500 focus-visible:outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
       </form>
