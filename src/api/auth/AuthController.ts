@@ -3,6 +3,7 @@ import { updateProfile } from "firebase/auth";
 import { addUserToDataBase } from "./dbService";
 import { SignUpFormData } from "../../dto/SignUpFormData";
 import { fullNameFormatter } from "../../utils/fullNameFormatter";
+import { notify } from "../../components/toast";
 
 /*this signup function mixes in signup with email and password for authentication, 
 setting the displayname on the user aka the users full Name and adding

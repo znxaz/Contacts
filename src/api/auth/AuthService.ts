@@ -5,12 +5,12 @@ import {
   signInWithEmailAndPassword,
   updatePassword,
   signOut as firebaseSignOut,
-  updateProfile,
 } from "firebase/auth";
 import { SignUpFormData } from "../../dto/SignUpFormData";
 
 export const signUp = (data: SignUpFormData) => {
   const { password, ...userData } = data;
+  console.log(userData); 
   return createUserWithEmailAndPassword(auth, userData.email, password)
     .then((userCredential) => {
       const user = userCredential.user;
@@ -25,6 +25,7 @@ export const signUp = (data: SignUpFormData) => {
 };
 
 export const signIn = (email: string, password: string) => {
+  console.log(email, password); 
   return signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;

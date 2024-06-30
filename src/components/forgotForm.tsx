@@ -37,7 +37,7 @@ const ForgotForm = () => {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex justify-center items-center bg-white shadow-xl h-2/5 w-[25em] flex-col rounded-xl"
+        className="flex justify-center items-center bg-white shadow-custom h-2/5 w-[25em] flex-col rounded-xl"
       >
         <div
           className="justify-self-start self-start ml-[1.5em] pb-[1em] hover:cursor-pointer"
@@ -60,10 +60,9 @@ const ForgotForm = () => {
         <input
           type="submit"
           value="Send Email"
-          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 m-2"
+          className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg hover:cursor-pointer focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 m-2"
         />
       </form>
-      <Toast />
     </>
   );
 };

@@ -6,8 +6,8 @@ import { useAuthOptions } from "../context/AuthOptionContext";
 import { useForgotFormContext } from "../context/forgotContext";
 const SignInForm = () => {
   interface SignInFormData {
-    email: string;
-    password: string;
+    Email: string;
+    Password: string;
   }
 
   const fields = [
@@ -19,7 +19,8 @@ const SignInForm = () => {
 
   const onSubmit: SubmitHandler<SignInFormData> = (data) => {
     const Data = { ...data };
-    signIn(Data.email, Data.password);
+    alert(Data); 
+    signIn(Data.Email, Data.Password);
   };
 
   const { authOptions, setAuthOptions } = useAuthOptions();
@@ -27,8 +28,11 @@ const SignInForm = () => {
   const { isForgot, setIsForgot } = useForgotFormContext();
 
   const SignInClick = () => {
-    setAuthOptions(!authOptions);
-    setSignInContext(!signInContext);
+    setTimeout(() => {
+      setAuthOptions(!authOptions);
+      setSignInContext(!signInContext);
+    }, 100);
+
   };
 
   const ForgotClick = () => {
@@ -44,7 +48,7 @@ const SignInForm = () => {
         <form
           action=""
           onSubmit={handleSubmit(onSubmit)}
-          className=" flex justify-center items-center bg-white shadow-xl  h-1/2 w-[30em] flex-col rounded-xl"
+          className=" flex justify-center items-center bg-white shadow-custom  h-1/2 w-[30em] flex-col rounded-xl"
         >
           <div
             className="justify-self-start self-start ml-[2.5em] pb-[1em] -mb-5 hover:cursor-pointer"
@@ -79,7 +83,7 @@ const SignInForm = () => {
           <input
             type="submit"
             value="Sign In"
-            className="w-1/2 mt-6 bg-white border focus-visible:ring-blue-500 focus-visible:outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="w-1/2 mt-6 bg-white border hover:cursor-pointer focus-visible:ring-blue-500 focus-visible:outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </form>
       )}

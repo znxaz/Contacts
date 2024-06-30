@@ -4,20 +4,25 @@ import { useAuthOptions } from "../context/AuthOptionContext";
 import { useSharedSignUpState } from "../context/signUpContext";
 import { SignUpFormData } from "../dto/SignUpFormData";
 import { signup } from "../api/auth/AuthController";
+import { notify } from "./toast";
 const SignUpForm = () => {
   const fields = [
     { label: "First Name", name: "firstName", type: "text" },
     { label: "Last Name", name: "lastName", type: "text" },
-    { label: "Email", name: "Email", type: "email" },
+    { label: "Email", name: "email", type: "email" },
     { label: "Phone Number", name: "phoneNumber", type: "tel" },
-    { label: "Password", name: "Password", type: "password" },
+    { label: "Password", name: "password", type: "password" },
   ];
 
   const { register, handleSubmit } = useForm<SignUpFormData>();
 
   const onSubmit: SubmitHandler<SignUpFormData> = (data) => {
-    const displayName = `${data.firstName} ${data.lastName}`;
+    try{
     signup(data);
+  }catch(error){
+    console.error(error); 
+  }
+  notify("Successfully signed up!"); 
   };
 
   const { authOptions, setAuthOptions } = useAuthOptions();
@@ -31,7 +36,7 @@ const SignUpForm = () => {
       <form
         action=""
         onSubmit={handleSubmit(onSubmit)}
-        className="flex justify-center items-center bg-white shadow-xl h-5/6 w-[30em] flex-col rounded-xl"
+        className="flex justify-center items-center bg-white shadow-custom h-5/6 w-[30em] flex-col rounded-xl"
       >
         <div
           className="justify-self-start self-start ml-[2.5em] pb-[1em] -mb-5 hover:cursor-pointer"
@@ -61,7 +66,7 @@ const SignUpForm = () => {
           <input
             type="submit"
             value="Sign Up"
-            className=" w-1/2 p-2.5 m-4 mt-8 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
+            className=" w-1/2 p-2.5 m-4 mt-8 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block hover:cursor-pointer dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
           />
           <img src="" alt="" />
         </>
