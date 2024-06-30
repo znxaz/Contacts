@@ -13,28 +13,34 @@ const AuthOptions = () => {
   const { signInContext, setSignInContext } = useSharedSignInState();
   const { sharedSignUpState, setSharedSignUpState } = useSharedSignUpState();
   const { isForgot, setIsForgot } = useForgotFormContext();
-  
+
   const SignUpClick = () => {
-    setAuthOptions(!authOptions);
-    setSharedSignUpState(!sharedSignUpState);
+    setTimeout(() => {
+      setAuthOptions(!authOptions);
+      setSharedSignUpState(!sharedSignUpState);
+    }, 100);
+
   };
   const SignInClick = () => {
-    setAuthOptions(!authOptions);
-    setSignInContext(!signInContext);
+    setTimeout(() => {
+      setAuthOptions(!authOptions);
+      setSignInContext(!signInContext);
+    },
+    100);
   };
   return (
     <div className="w-screen h-screen flex justify-center items-center ">
       {authOptions && (
-        <div className="flex justify-center flex-col items-center bg-gray-100 w-1/3 h-1/2 rounded-xl ">
-          <h1 className="text-black font-extrabold font-mono">Welcome Back</h1>
+        <div className="flex justify-center items-center bg-white shadow-xl h-1/2 w-1/3 flex-col rounded-xl ">
+          <h1 className="text-black font-extrabold font-mono">Welcome Back!</h1>
           <button
-            className="rounded-xl bg-blue-400 text-white font-bold w-2/3 h-1/6 m-4"
+            className="bg-white border focus-visible:ring-blue-500 focus-visible:outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 font-bold w-2/3 h-1/6 m-4"
             onClick={SignInClick}
           >
             Sign In
           </button>
           <button
-            className="rounded-xl bg-blue-400 text-white font-bold w-2/3 h-1/6 m-4"
+            className="bg-white border focus-visible:ring-blue-500 focus-visible:outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 font-bold w-2/3 h-1/6 m-4"
             onClick={SignUpClick}
           >
             Sign Up
@@ -47,6 +53,5 @@ const AuthOptions = () => {
     </div>
   );
 };
-
 
 export default AuthOptions;
