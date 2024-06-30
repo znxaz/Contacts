@@ -13,7 +13,7 @@ const ContactCard = () => {
       onClick={() => sharedState ?  setSharedState(!sharedState): sharedState}
     >
       <div className=" w-4/5 h-1/2 items-center justify-center">
-        <div className="flex justify-between items-center w-full h-[5rem] border border-white bg-white rounded-md hover:bg-slate-200">
+        <div className="flex justify-center items-center bg-white shadow-custom w-full h-[5rem] border rounded-md hover:bg-slate-200">
           <div className="flex w-2/3">
             <img
               src={defaultPfp}

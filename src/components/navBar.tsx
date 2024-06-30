@@ -49,8 +49,7 @@ const NavBar = () => {
       </nav>
 
       {sharedState && (
-        <div className="flex justify-start flex-col items-start right-0 max-w-1/4 h-1/3 w-60 absolute mx-2 mt-2  bg-slate-100 rounded-xl z-10">
-
+        <div className="flex justify-start flex-col items-start right-0 max-w-1/4 h-1/3 w-60 absolute mx-2 mt-2 bg-white shadow-custom rounded-xl z-10">
           <div className="flex flex-col justify-between justify-content-start items-start h-1/3">
           <h5 className="text-black text-left text-sm m-2">
               {currentUser?.displayName}

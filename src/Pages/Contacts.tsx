@@ -1,4 +1,5 @@
 import ContactCard from "../components/contact";
+import { ContactTable } from "../components/contactTable";
 import NavBar from "../components/navBar";
 import { AuthProvider } from "../context/authContext";
 import {
@@ -12,7 +13,9 @@ const Contacts = () => {
       <AuthProvider>
         <SharedDropDownProvider>
           <NavBar></NavBar>
+          <ContactTable>
           <ContactCard></ContactCard>
+          </ContactTable>
         </SharedDropDownProvider>
       </AuthProvider>
     </>
