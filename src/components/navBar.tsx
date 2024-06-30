@@ -4,8 +4,6 @@ import contacts from "../assets/images/contacts.png";
 import defaultPfp from "../assets/images/defPfp.png";
 import { SignOut } from "../api/auth/AuthService";
 import { useAuth, AuthContext } from "../context/authContext";
-import { User } from "firebase/auth";
-
 const NavBar = () => {
   const { sharedState, setSharedState } = useSharedDropDownState();
   const authContext = useAuth();

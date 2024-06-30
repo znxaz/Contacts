@@ -1,11 +1,9 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { signUp } from "../api/auth/AuthService";
 import { useAuthOptions } from "../context/AuthOptionContext";
 import { useSharedSignUpState } from "../context/signUpContext";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../api/auth/firebaseConfig";
-import { v4 as uuidv4 } from "uuid";
+import { SignUpFormData } from "../dto/SignUpFormData";
+import { signup } from "../api/auth/AuthController";
 const SignUpForm = () => {
   const fields = [
     { label: "First Name", name: "firstName" },
@@ -14,32 +12,13 @@ const SignUpForm = () => {
     { label: "Phone Number", name: "phoneNumber" },
   ];
 
-  interface SignUpFormData {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-    password: string;
-  }
-
   const { register, handleSubmit } = useForm<SignUpFormData>();
 
   const onSubmit: SubmitHandler<SignUpFormData> = (data) => {
     const displayName = `${data.firstName} ${data.lastName}`
-    signUp(data.email, data.password, displayName );
-    addUser(data);
+    signup(data); 
   };
 
-  async function addUser(userData: SignUpFormData) {
-    try {
-      const userId = uuidv4();
-      console.log(userId);
-      await setDoc(doc(db, "users", userId), userData);
-      console.log("User added with ID: ", userId);
-    } catch (e) {
-      console.error("Error adding user: ", e);
-    }
-  }
 
   const { authOptions, setAuthOptions } = useAuthOptions();
   const { sharedSignUpState, setSharedSignUpState } = useSharedSignUpState();

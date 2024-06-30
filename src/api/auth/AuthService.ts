@@ -7,18 +7,13 @@ import {
   signOut as firebaseSignOut,
   updateProfile,
 } from "firebase/auth";
-import { fullNameFormatter } from "../../utils/fullNameFormatter";
+import { SignUpFormData } from "../../dto/SignUpFormData";
 
-
-export const signUp = (email: string, password: string, name: string) => {
-  return createUserWithEmailAndPassword(auth, email, password)
+export const signUp = (data: SignUpFormData) => {
+  const { password, ...userData } = data;
+  return createUserWithEmailAndPassword(auth, userData.email, password)
     .then((userCredential) => {
-      const fullName = fullNameFormatter(name); 
       const user = userCredential.user;
-      if (user) {
-        updateProfile(user, { displayName: fullName });
-        window.location.href = "/";
-      }
       return user;
     })
     .catch((error) => {
@@ -26,7 +21,7 @@ export const signUp = (email: string, password: string, name: string) => {
       const errorMessage = error.message;
       console.error("Signup error:", errorCode, errorMessage);
       throw error;
-    }); 
+    });
 };
 
 export const signIn = (email: string, password: string) => {
