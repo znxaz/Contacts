@@ -4,7 +4,8 @@ import { useAuth } from "../context/authContext";
 import { notify } from "./toast";
 import { addContact } from "../api/auth/dbService";
 import { ContactData } from "../dto/ConactData";
-
+import { fullNameFormatter } from "../utils/fullNameFormatter";
+import { format } from "path";
 interface Field {
   name: string;
   label: string;
@@ -27,7 +28,18 @@ const ContactForm = () => {
 
   const onSubmit: SubmitHandler<ContactData> = async (data) => {
     try {
-      await addContact(currentUser!.uid, data);
+
+      //format First Name and Last Name
+      const fname = fullNameFormatter(data.firstName);
+      const lname = fullNameFormatter(data.lastName);
+      
+      // Create a new object with updated firstName and lastName
+      const updatedData = {
+        ...data,
+        firstName: fname,
+        lastName: lname
+      };
+      await addContact(currentUser!.uid, updatedData);
     } catch (error) {
       console.error("An error has occurred wile trying to add a contact");
       notify("Contact not added. Please try again later!");

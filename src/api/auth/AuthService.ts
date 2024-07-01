@@ -42,7 +42,7 @@ export const signIn = (email: string, password: string) => {
     });
 };
 
-export const SignOut = async () => {
+export const Signout = async () => {
   return await firebaseSignOut(auth);
 };
 

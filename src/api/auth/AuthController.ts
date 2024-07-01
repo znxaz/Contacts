@@ -1,4 +1,4 @@
-import { signUp } from "./AuthService";
+import { signUp, Signout } from "./AuthService";
 import { updateProfile } from "firebase/auth";
 import { addUserToDataBase } from "./dbService";
 import { SignUpFormData } from "../../dto/SignUpFormData";
@@ -16,3 +16,8 @@ export const signup = async (data: SignUpFormData) => {
   window.location.href = "/";
   return user;
 };
+
+export const SignOut = async () => {
+  await Signout(); 
+  window.location.href = "/auth"
+}
