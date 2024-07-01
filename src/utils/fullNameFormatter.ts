@@ -1,9 +1,7 @@
 // to make every first letter of a full name uppercase
-export const fullNameFormatter = (
-  firstName: string,
-  lastName: string
+export const fullNameFormatter = (Name: string,
 ): string => {
-  const fullName = `${firstName} ${lastName}`;
+  const fullName = `${Name}`;
   // Convert the entire string to lowercase
   const lowerCaseText = fullName.toLowerCase().trim();
   // Capitalize the first letter of each word

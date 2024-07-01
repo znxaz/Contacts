@@ -18,6 +18,15 @@ export const UserContacts = () => {
         try {
           const contacts = await getAllContacts(currentUser.uid);
           if (contacts) {
+            contacts.sort((a, b) => {
+              if (a.firstName < b.firstName) {
+                return -1;
+              }
+              if (a.firstName > b.firstName) {
+                return 1;
+              }
+              return 0;
+            }); 
             setContacts(contacts);
           } else {
             return <p>No Contacts Found!</p>;
@@ -36,7 +45,9 @@ export const UserContacts = () => {
   return (
     <ContactTable>
       {contacts!.map((contact: ContactData) => (
+        <tr className="w-4/5">
         <ContactCard contact={contact}></ContactCard>
+        </tr>
       ))}
     </ContactTable>
   );
