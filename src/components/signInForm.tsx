@@ -19,7 +19,6 @@ const SignInForm = () => {
 
   const onSubmit: SubmitHandler<SignInFormData> = (data) => {
     const Data = { ...data };
-    alert(Data); 
     signIn(Data.Email, Data.Password);
   };
 

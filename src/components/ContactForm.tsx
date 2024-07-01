@@ -1,15 +1,9 @@
-import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useSharedDropDownState } from "../context/dropdownContext";
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../api/auth/firebaseConfig";
+import { useAuth } from "../context/authContext";
 import { notify } from "./toast";
-interface ContactValues {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  email: string;
-}
+import { addContact } from "../api/auth/dbService";
+import { ContactData } from "../dto/ConactData";
 
 interface Field {
   name: string;
@@ -19,7 +13,8 @@ interface Field {
 
 const ContactForm = () => {
   const { sharedState, setSharedState } = useSharedDropDownState();
-  const { register, handleSubmit } = useForm<ContactValues>();
+  const { register, handleSubmit, reset } = useForm<ContactData>();
+
   const Fields: Field[] = [
     { name: "firstName", label: "First Name", type: "text" },
     { name: "lastName", label: "Last Name", type: "text" },
@@ -27,17 +22,18 @@ const ContactForm = () => {
     { name: "email", label: "Email", type: "email" },
   ];
 
-  const onSubmit: SubmitHandler<ContactValues> = async (data) => {
-    try {
-      const docRef = await addDoc(collection(db, "Contacts"), {
-        data: data,
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-    notify("Contact has been added!"); 
+  const authContext = useAuth();
+  const { currentUser } = authContext;
 
+  const onSubmit: SubmitHandler<ContactData> = async (data) => {
+    try {
+      await addContact(currentUser!.uid, data);
+    } catch (error) {
+      console.error("An error has occurred wile trying to add a contact");
+      notify("Contact not added. Please try again later!");
+    }
+    notify("contact successfully added");
+    reset(); 
   };
 
   return (
@@ -63,15 +59,9 @@ const ContactForm = () => {
                 className="w-2/3 bg-white border focus-visible:ring-blue-500 focus-visible:outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 type={field.type}
                 id={field.name}
-                key={field.name}
-                {...register(
-                  field.name as
-                    | "firstName"
-                    | "lastName"
-                    | "phoneNumber"
-                    | "email",
-                  { required: true }
-                )}
+                {...register(field.name as keyof ContactData, {
+                  required: true,
+                })}
               ></input>
             </>
           ))}

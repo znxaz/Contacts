@@ -14,6 +14,7 @@ interface AuthContextType {
   setCurrentUser: Dispatch<SetStateAction<User | null>>;
   userLoggedIn: boolean;
   loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>
 }
 
 const AuthContext = React.createContext<AuthContextType | undefined>(undefined);
@@ -50,6 +51,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setCurrentUser,
     userLoggedIn,
     loading,
+    setLoading, 
   };
 
   return (

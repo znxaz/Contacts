@@ -5,12 +5,17 @@ import settings from "../assets/images/settings.png";
 import smartPhone from "../assets/images/smartphone.png";
 import { Tooltip } from "react-tooltip";
 import { useSharedDropDownState } from "../context/dropdownContext";
-const ContactCard = () => {
+import { ContactData } from "../dto/ConactData";
+
+interface ContactCardProps {
+  contact: ContactData;
+}
+const ContactCard: React.FC<ContactCardProps> = ({ contact }) => {
   const { sharedState, setSharedState } = useSharedDropDownState();
   return (
     <div
       className="w-screen h-screen flex items-center justify-center bg-slate-100"
-      onClick={() => sharedState ?  setSharedState(!sharedState): sharedState}
+      onClick={() => (sharedState ? setSharedState(!sharedState) : sharedState)}
     >
       <div className=" w-4/5 h-1/2 items-center justify-center">
         <div className="flex justify-center items-center bg-white shadow-custom w-full h-[5rem] border rounded-md hover:bg-slate-200">
@@ -21,9 +26,11 @@ const ContactCard = () => {
               className=" h-[6rem] w-24 m-5 rounded-full p-3"
             />
             <div className="flex w-3/4 items-center justify-between">
-              <h3 className="mx-2">Name</h3>
-              <p className="mx-2">Number</p>
-              <p className="mx-2">Email</p>
+              <h3 className="mx-2">
+                {contact.firstName} {contact.lastName}
+              </h3>
+              <p className="mx-2">{contact.phoneNumber}</p>
+              <p className="mx-2">{contact.email}</p>
             </div>
           </div>
           <div className=" flex flex-row justify-between items-center w-1/6">

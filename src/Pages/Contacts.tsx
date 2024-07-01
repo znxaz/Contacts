@@ -1,11 +1,7 @@
-import ContactCard from "../components/contact";
-import { ContactTable } from "../components/contactTable";
 import NavBar from "../components/navBar";
 import { AuthProvider } from "../context/authContext";
-import {
-  SharedDropDownProvider,
-  useSharedDropDownState,
-} from "../context/dropdownContext";
+import { SharedDropDownProvider } from "../context/dropdownContext";
+import { UserContacts } from "../components/UserContacts";
 
 const Contacts = () => {
   return (
@@ -13,9 +9,7 @@ const Contacts = () => {
       <AuthProvider>
         <SharedDropDownProvider>
           <NavBar></NavBar>
-          <ContactTable>
-          <ContactCard></ContactCard>
-          </ContactTable>
+          <UserContacts></UserContacts>
         </SharedDropDownProvider>
       </AuthProvider>
     </>
