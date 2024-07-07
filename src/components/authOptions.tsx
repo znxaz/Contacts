@@ -19,28 +19,47 @@ const AuthOptions = () => {
       setAuthOptions(!authOptions);
       setSharedSignUpState(!sharedSignUpState);
     }, 100);
-
   };
   const SignInClick = () => {
     setTimeout(() => {
       setAuthOptions(!authOptions);
       setSignInContext(!signInContext);
-    },
-    100);
+    }, 100);
   };
   return (
     <div className="w-screen h-screen flex justify-center items-center ">
       {authOptions && (
-        <div className="flex justify-center items-center bg-white shadow-custom h-1/2 w-1/3 flex-col rounded-xl ">
-          <h1 className="text-black font-extrabold font-mono mb-2">Welcome Back!</h1>
+        <div className="flex justify-center items-center flex-col
+         bg-white shadow-custom rounded-xl 
+         xs:w-4/5 xs:h-1/3
+         md:w-3/4 md: h-2/3
+         lg:h-1/2 lg:w-1/3">
+          <h1 className="text-black font-extrabold font-mono 
+          lg:mb-2 
+          md:mb-20
+          xs:mb-8">
+            Welcome Back!
+          </h1>
           <button
-            className="bg-white border focus-visible:ring-blue-500 focus-visible:outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500  w-2/3 h-1/6 m-4 mb-2"
+            className="bg-white border rounded-lg block 
+             focus-visible:ring-blue-500 focus-visible:outline-none  focus:ring-blue-500 focus:border-blue-500
+              text-gray-900 text-sm 
+               dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 
+               lg:w-2/3 lg:h-1/6 lg:m-4 lg:mb-2 lg:p-2.5
+               md:w-2/3 md:h-1/6 md:m-4 md:mb-2 md:p-2.5
+               xs:w-2/3 xs:h-1/6 xs:mb-2 "
             onClick={SignInClick}
           >
             Sign In
           </button>
           <button
-            className="bg-white border focus-visible:ring-blue-500 focus-visible:outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500  w-2/3 h-1/6 m-4 mt-2"
+                className="bg-white border rounded-lg block 
+                focus-visible:ring-blue-500 focus-visible:outline-none  focus:ring-blue-500 focus:border-blue-500
+                 text-gray-900 text-sm 
+                  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 
+                  lg:w-2/3 lg:h-1/6 lg:m-4 lg:mb-2 lg:p-2.5
+                  md:w-2/3 md:h-1/6 md:m-4 md:mb-2 md:p-2.5
+                  xs:w-2/3 xs:h-1/6 xs:mb-2 "
             onClick={SignUpClick}
           >
             Sign Up
