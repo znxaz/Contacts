@@ -6,6 +6,7 @@ module.exports = {
       boxShadow: {
         "custom": "  rgba(0, 0, 0, 0.16) 1px 1px 4px;",
       },
+      screens: {"xs": "360px"}, 
     },
   },
   plugins: [],

@@ -4,22 +4,39 @@ import { signIn } from "../api/auth/AuthService";
 import { useSharedSignInState } from "../context/signInContext";
 import { useAuthOptions } from "../context/AuthOptionContext";
 import { useForgotFormContext } from "../context/forgotContext";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 const SignInForm = () => {
   interface SignInFormData {
-    Email: string;
-    Password: string;
+    email: string;
+    password: string;
   }
 
+  const validationSchema = yup.object().shape({
+    email: yup
+      .string()
+      .email("Invalid email format")
+      .required("Email is required"),
+    password: yup
+      .string()
+      .required("Password is required"),
+  });
+
   const fields = [
-    { label: "Email", name: "Email", type: "email" },
-    { label: "Password", name: "Password", type: "password" },
+    { label: "Email", name: "email", type: "email" },
+    { label: "Password", name: "password", type: "password" },
   ];
 
-  const { register, handleSubmit } = useForm<SignInFormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInFormData>({ resolver: yupResolver(validationSchema) });
 
   const onSubmit: SubmitHandler<SignInFormData> = (data) => {
     const Data = { ...data };
-    signIn(Data.Email, Data.Password);
+    signIn(Data.email, Data.password);
   };
 
   const { authOptions, setAuthOptions } = useAuthOptions();
@@ -31,14 +48,13 @@ const SignInForm = () => {
       setAuthOptions(!authOptions);
       setSignInContext(!signInContext);
     }, 100);
-
   };
 
   const ForgotClick = () => {
     setTimeout(() => {
-    setSignInContext(!signInContext);
-    setIsForgot(!isForgot);
-  }, 100);
+      setSignInContext(!signInContext);
+      setIsForgot(!isForgot);
+    }, 100);
   };
 
   return (
@@ -71,6 +87,11 @@ const SignInForm = () => {
                 })}
                 className="w-2/3 bg-white border focus-visible:ring-blue-500 focus-visible:outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
+              {errors[field.name as keyof SignInFormData] && (
+                <p className=" self-start ml-20 mb-3 z-50 p-0 h-4 animate-pulse">
+                  {errors[field.name as keyof SignInFormData]?.message}
+                </p>
+              )}
             </>
           ))}
           <a

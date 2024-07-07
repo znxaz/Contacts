@@ -22,6 +22,7 @@ const NavBar = () => {
             src={contacts}
             alt="Logo"
             className="w-14 h-14 ml-4 max-w-14 max-h-14 cursor-pointer"
+            onClick={()=> window.location.href = "/"}
           />
         </div>
         <div className="space-x-7 m-4 flex flex-row justify-between items-center text-3xl font-extrabold">
@@ -43,14 +44,14 @@ const NavBar = () => {
             src={defaultPfp}
             alt="pfp"
             onClick={showDropDown}
-            className="w-14 h-14 ml-4 max-w-14 max-h-14  mt-4 mx-4 mb-1 rounded-full"
+            className="w-14 h-14 ml-4 max-w-14 max-h-14  mt-4 mx-4 mb-1 rounded-full hover:cursor-pointer"
           />
         </div>
       </nav>
 
       {sharedState && (
-        <div className="flex justify-start flex-col items-start right-0 max-w-1/4 h-1/3 w-60 absolute mx-2 mt-2 bg-white shadow-custom rounded-xl z-10">
-          <div className="flex flex-col justify-between justify-content-start items-start h-1/3">
+        <div className="flex justify-start flex-col items-start border border-black right-0 max-w-1/4 h-1/3 w-60 absolute mx-2 mt-2 bg-white shadow-custom rounded-xl z-10">
+          <div className="flex flex-col justify-between justify-content-start items-start h-1/3 rounded-xl">
           <h5 className="text-black text-left text-sm m-2">
               {currentUser?.displayName}
             </h5>
