@@ -6,6 +6,10 @@ import { useAuthOptions } from "../context/AuthOptionContext";
 import { useForgotFormContext } from "../context/forgotContext";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { GeneralLabel } from "./generalLabel";
+import { GeneralForm } from "./generalForm";
+import { GeneralInputField } from "./generalInput";
+import { BackButton } from "./backButton";
 
 const SignInForm = () => {
   interface SignInFormData {
@@ -13,31 +17,10 @@ const SignInForm = () => {
     password: string;
   }
 
-  const validationSchema = yup.object().shape({
-    email: yup
-      .string()
-      .email("Invalid email format")
-      .required("Email is required"),
-    password: yup
-      .string()
-      .required("Password is required"),
-  });
-
   const fields = [
     { label: "Email", name: "email", type: "email" },
     { label: "Password", name: "password", type: "password" },
   ];
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SignInFormData>({ resolver: yupResolver(validationSchema) });
-
-  const onSubmit: SubmitHandler<SignInFormData> = (data) => {
-    const Data = { ...data };
-    signIn(Data.email, Data.password);
-  };
 
   const { authOptions, setAuthOptions } = useAuthOptions();
   const { signInContext, setSignInContext } = useSharedSignInState();
@@ -57,41 +40,37 @@ const SignInForm = () => {
     }, 100);
   };
 
+  const validationSchema = yup.object().shape({
+    username: yup.string().required("Username is required"),
+    password: yup.string().required("Password is required"),
+  });
+
+
+  const {formState: { errors }} = useForm({resolver: yupResolver(validationSchema)})
+
+  const onSubmit: SubmitHandler<SignInFormData> = (data) => {
+    const Data = { ...data };
+    signIn(Data.email, Data.password);
+  };
+
   return (
     <div className="w-screen h-screen flex justify-center items-center">
       {signInContext && (
-        <form
-          action=""
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex justify-center items-center bg-white shadow-custom  h-1/2 w-[30em] flex-col rounded-xl"
+        <GeneralForm
+          HeightWidth=" md:w-2/3 md:h-1/3 md:m-4 md:mb-2 md:p-2.5
+          xs:w-4/5 xs:h-1/2 xs:mb-2
+          lg:h-1/2 lg:w-[30em]" 
+          onSubmit={onSubmit}
         >
-          <div
-            className="justify-self-start self-start ml-[2.5em] pb-[1em] -mb-5 hover:cursor-pointer"
-            onClick={SignInClick}
-          >
-            &#x25c0;
-          </div>
+          <BackButton onClick={SignInClick}></BackButton>
           {fields.map((field) => (
             <>
-              <label
-                htmlFor={field.name}
-                className="justify-self-start self-start ml-[5em] m-2"
-              >
-                {field.label}
-              </label>
-              <input
+              <GeneralLabel name={field.name} label={field.label} />
+              <GeneralInputField
                 type={field.type}
-                id={field.name}
-                {...register(field.name as keyof SignInFormData, {
-                  required: true,
-                })}
-                className="w-2/3 bg-white border focus-visible:ring-blue-500 focus-visible:outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              />
-              {errors[field.name as keyof SignInFormData] && (
-                <p className=" self-start ml-20 mb-3 z-50 p-0 h-4 animate-pulse">
-                  {errors[field.name as keyof SignInFormData]?.message}
-                </p>
-              )}
+                name={field.name}
+                errors={errors}
+              ></GeneralInputField>
             </>
           ))}
           <a
@@ -105,7 +84,7 @@ const SignInForm = () => {
             value="Sign In"
             className="w-1/2 mt-6 bg-white border hover:cursor-pointer focus-visible:ring-blue-500 focus-visible:outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
-        </form>
+        </GeneralForm>
       )}
     </div>
   );

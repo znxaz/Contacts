@@ -1,25 +1,10 @@
 import React from "react";
-import { AuthOptionsProvider } from "../context/AuthOptionContext";
-import { AuthProvider } from "../context/authContext";
-import { SignInContextProvider } from "../context/signInContext";
-import { SignUpContextProvider } from "../context/signUpContext";
-import { ForgotFormContextProvider } from "../context/forgotContext";
-import AuthOptions from "../components/authOptions";
+import SignUpComponent from "../components/Signup2";
 
-export const Auth = () => {
-    return(
-  <AuthProvider>
-    <AuthOptionsProvider>
-      <SignUpContextProvider>
-        <SignInContextProvider>
-          <ForgotFormContextProvider>
-          <AuthOptions></AuthOptions>
-          </ForgotFormContextProvider>
-        </SignInContextProvider>
-      </SignUpContextProvider>
-    </AuthOptionsProvider>
-  </AuthProvider>
-    ); 
-};
+const Auth= () => {
+    return (
+        <SignUpComponent></SignUpComponent>
+    )
+}
 
 export default Auth; 

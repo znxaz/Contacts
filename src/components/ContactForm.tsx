@@ -1,70 +1,31 @@
+import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useSharedDropDownState } from "../context/dropdownContext";
-import { useAuth } from "../context/authContext";
-import { notify } from "./toast";
-import { addContact } from "../api/auth/dbService";
-import { ContactData } from "../dto/ConactData";
-import { fullNameFormatter } from "../utils/fullNameFormatter";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup'
+
+interface ContactValues {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string;
+}
+
 interface Field {
   name: string;
   label: string;
-  type: string;
 }
-const validationSchema = yup.object().shape({
-  firstName: yup.string().required("First Name is required"),
-  lastName: yup.string().required("Last Name is required"),
-  phoneNumber: yup
-    .string()
-    .matches(/^[0-9]+$/, "Phone Number must be digits")
-    .required("Phone Number is required"),
-  email: yup
-    .string()
-    .email("Invalid email format")
-    .required("Email is required"),
-});
-
 
 const ContactForm = () => {
   const { sharedState, setSharedState } = useSharedDropDownState();
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<ContactData>({ resolver: yupResolver(validationSchema) });
-
+  const { register, handleSubmit } = useForm<ContactValues>();
   const Fields: Field[] = [
-    { name: "firstName", label: "First Name", type: "text" },
-    { name: "lastName", label: "Last Name", type: "text" },
-    { name: "phoneNumber", label: "Phone Number", type: "tel" },
-    { name: "email", label: "Email", type: "email" },
+    { name: "firstName", label: "First Name" },
+    { name: "lastName", label: "Last Name" },
+    { name: "phoneNumber", label: "Phone Number" },
+    { name: "email", label: "Email" },
   ];
 
-  const authContext = useAuth();
-  const { currentUser } = authContext;
-
-  const onSubmit: SubmitHandler<ContactData> = async (data) => {
-    try {
-      //format First Name and Last Name
-      const fname = fullNameFormatter(data.firstName);
-      const lname = fullNameFormatter(data.lastName);
-
-      // Create a new object with updated firstName and lastName
-      const updatedData = {
-        ...data,
-        firstName: fname,
-        lastName: lname,
-      };
-      await addContact(currentUser!.uid, updatedData);
-    } catch (error) {
-      console.error("An error has occurred wile trying to add a contact");
-      notify("Contact not added. Please try again later!");
-      return null;
-    }
-    notify("contact successfully added");
-    reset();
+  const onSubmit: SubmitHandler<ContactValues> = (data) => {
+    alert(JSON.stringify(data));
   };
 
   return (
@@ -75,38 +36,35 @@ const ContactForm = () => {
       <form
         action=""
         onSubmit={handleSubmit(onSubmit)}
-        className="flex justify-center items-center bg-white shadow-custom rounded-xl w-1/3 h-2/3"
-        noValidate
+        className="flex justify-center items-center flex-col border-2 rounded-3xl w-80 h-3/5"
       >
-        <div className="flex justify-center items-center bg-white shadow-custom flex-col w-full  min-h-full h-auto rounded-xl">
+        <div className="flex justify-center items-center bg-white flex-col w-full h-full rounded-3xl">
           {Fields.map((field) => (
-            <>
+            <div className="relative mb-3">
               <label
                 htmlFor={field.name}
-                className="justify-self-start self-start ml-[5em] m-2 mt-3"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 {field.label}
               </label>
               <input
-                className="w-2/3 bg-white border focus-visible:ring-blue-500 focus-visible:outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                type={field.type}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                type="text"
                 id={field.name}
-                {...register(field.name as keyof ContactData, {
-                  required: `${field.label} is required!`,
-                })}
-              ></input>
-              {errors[field.name as keyof ContactData] && (
-                <p className=" self-start ml-20 my-2 z-50 p-0 h-4 animate-pulse">
-                  {errors[field.name as keyof ContactData]?.message}
-                </p>
-              )}
-            </>
+                {...register(
+                  field.name as
+                    | "firstName"
+                    | "lastName"
+                    | "phoneNumber"
+                    | "email"
+                )}
+              />
+            </div>
           ))}
-
           <input
             type="submit"
             value="Add Contact"
-            className="w-1/2 mt-6 mb-3 bg-white border hover:cursor-pointer focus-visible:ring-blue-500 focus-visible:outline-none text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
       </form>
