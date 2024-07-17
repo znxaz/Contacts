@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 1. Add a .env file to the root of the application, and add your firebase values.
 
-2. npm intall
+2. npm install
 
 3. npm start
 
