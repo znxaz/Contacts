@@ -2,6 +2,14 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Launching The App 
+
+1. Add a .env file to the root of the application, and add your firebase values.
+
+2. npm intall
+
+3. npm start
+
 ## Available Scripts
 
 In the project directory, you can run:
